@@ -1,0 +1,4 @@
+# Break Script for Lab WK-BRK001
+
+# Disable the Ethernet Network Adapter
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
