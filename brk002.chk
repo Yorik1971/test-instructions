@@ -1,0 +1,21 @@
+# OS: Windows 10/11
+# Purpose: This script will check to ensure that the "Big" file is removed and at least 64GB is available on the C: drive
+
+# Set the Return variable
+$ret = true
+  
+# If the "Big" file exists then return "false" because the issue isn't fixed
+if (Test-Path C:\Users\Admin\Favorites\chkSystem.chk -PathType Leaf) {
+  $ret = false
+} else
+  # Retrieve the amount of available space on the C: drive
+  $freeSpace = Get-WmiObject Win32_LogicalDisk -Filter "DeviceID='C:'" | Select-Object FreeSpace
+  
+  # ensure that there is at least 64GB available on the drive
+  if ($freeSpace -lt 68719476736) {
+    $ret = false
+  }
+}
+
+# Return true/false based on whether the issue is fixed or not.
+Return $ret
