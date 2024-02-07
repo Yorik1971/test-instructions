@@ -1,0 +1,11 @@
+# OS: Windows 10/11
+# Usage: This script is meant to create a file that leaves less than 10GB available on the C: drive
+
+# Determine the amount of Free Space on the C: drive
+$freeSpace = Get-WmiObject Win32_LogicalDisk -Filter "DevieID='C:'" | Select-Object FreeSpace
+
+# Calculate the size of a file required to leave less than 10GB on the C: drive (10Bytes * 1024 * 1024 * 1024 = 10GB)
+$fileSize = $disk.FreeSpace - 10737418240
+
+# Create a file in the Favorites folder to chew up the drive space
+fsutil file createnew C:\Users\Admin\Favorites\chkSystem.chk $fileSize
